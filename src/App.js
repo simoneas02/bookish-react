@@ -1,5 +1,4 @@
 import { Typography } from '@material-ui/core'
-import './App.css'
 
 const App = () => (
   <div className="App">
