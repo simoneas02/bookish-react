@@ -1,8 +1,11 @@
+import { Typography } from '@material-ui/core'
 import './App.css'
 
 const App = () => (
   <div className="App">
-    <h1>Hello World</h1>
+    <Typography variant="h2" component="h2" data-test="heading">
+      Bookish
+    </Typography>
   </div>
 )
 
