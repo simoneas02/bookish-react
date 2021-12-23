@@ -1,3 +1,4 @@
 {
-  "extends": ["plugin:cypress/recommended"]
+  "extends": ["plugin:cypress/recommended"],
+  "parser": "babel-eslint"
 }
