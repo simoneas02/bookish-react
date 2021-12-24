@@ -1,4 +1,12 @@
-const BookList = ({ books }) => {
+const BookList = ({ books, loading, error }) => {
+  if (loading) {
+    return <p>Loading...</p>
+  }
+
+  if (error) {
+    return <p>An unexpected error ocurred</p>
+  }
+
   return (
     <ul data-test="book-list">
       {books.map(({ name }) => (
