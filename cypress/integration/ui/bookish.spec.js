@@ -1,26 +1,10 @@
 import axios from 'axios'
 
-before(async () => {
-  try {
-    return await axios.delete('http://localhost:8080/books?_cleanup=true')
-  } catch (err) {
-    return err
-  }
-})
-
-afterEach(async () => {
-  try {
-    return await axios.delete('http://localhost:8080/books?_cleanup=true')
-  } catch (err) {
-    return err
-  }
-})
-
-beforeEach(() => {
+const feedStubBooks = () => {
   const books = [
     { name: 'Refactoring', id: 1 },
     { name: 'Domain-driven design', id: 2 },
-    { name: 'Building Microservices', id: 3 },
+    { name: 'Building Micro-service', id: 3 },
   ]
 
   return books.map(item =>
@@ -28,36 +12,75 @@ beforeEach(() => {
       headers: { 'Content-Type': 'application/json' },
     })
   )
-})
+}
 
-describe('Bookisn application', () => {
+const cleanUpStubBooks = async () => {
+  try {
+    return await axios.delete('http://localhost:8080/books?_cleanup=true')
+  } catch (err) {
+    return err
+  }
+}
+
+const gotoApp = () => {
+  cy.visit('http://localhost:3000/')
+}
+
+const checkAppTitle = () => {
+  cy.get('[data-test="heading"]').contains('Bookish')
+}
+
+const checkBookListWith = (expectation = []) => {
+  cy.get('[data-test="book-list"]').should('exist')
+
+  cy.get('[data-test="book-item"]').should(books => {
+    expect(books).to.have.length(expectation.length)
+
+    const titles = [...books].map(book => book.querySelector('h2').innerHTML)
+    expect(titles).to.deep.equal(expectation)
+  })
+}
+
+const gotoNthBookInTheList = nth => {
+  cy.get('[data-test="book-item"]').contains('View Details').eq(nth).click()
+}
+
+const checkBookDetail = () => {
+  cy.get('[data-test="book-title"]').contains('Refactoring')
+}
+
+export const performSearch = term => {
+  cy.get('[data-test="search"] input').type(term)
+}
+
+describe('Bookish application', () => {
+  beforeEach(() => {
+    feedStubBooks()
+  })
+
+  before(async () => {
+    cleanUpStubBooks()
+  })
+
+  afterEach(async () => {
+    cleanUpStubBooks()
+  })
+
   it('Visits the bookish', () => {
-    cy.visit('http://localhost:3000/')
-    cy.get('[data-test="heading"]').contains('Bookish')
+    gotoApp()
+    checkAppTitle()
   })
-
   it('Shows a book list', () => {
-    cy.visit('http://localhost:3000/')
-    cy.get('[data-test="book-list"]').should('exist')
-    cy.get('[data-test="book-item"]').should('have.length', 3)
-
-    cy.get('[data-test="book-item"]').should(books => {
-      expect(books).to.have.length(3)
-
-      const titles = [...books].map(book => book.querySelector('h2').innerHTML)
-
-      expect(titles).to.deep.equal([
-        'Refactoring',
-        'Domain-driven design',
-        'Building Microservices',
-      ])
-    })
+    gotoApp()
+    checkBookListWith([
+      'Refactoring',
+      'Domain-driven design',
+      'Building Micro-service',
+    ])
   })
-
   it('Goes to the detail page', () => {
-    cy.visit('http://localhost:3000/')
-    cy.get('[data-test="book-item"]').contains('View Details').eq(0).click()
-    cy.url().should('include', '/books/1')
-    cy.get('[data-test="book-title"]').contains('Refactoring')
+    gotoApp()
+    gotoNthBookInTheList(0)
+    checkBookDetail()
   })
 })
