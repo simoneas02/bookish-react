@@ -1,3 +1,5 @@
+import { Link } from 'react-router-dom'
+
 const BookList = ({ books, loading, error }) => {
   if (loading) {
     return <p>Loading...</p>
@@ -12,7 +14,7 @@ const BookList = ({ books, loading, error }) => {
       {books.map(({ name, id }) => (
         <li key={id} className="book-item">
           <h2 className="title">{name}</h2>
-          <a href={`/books/${id}`}>View Details</a>
+          <Link to={`/books/${id}`}>View Details</Link>
         </li>
       ))}
     </ul>
