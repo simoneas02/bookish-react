@@ -83,4 +83,15 @@ describe('Bookish application', () => {
     gotoNthBookInTheList(0)
     checkBookDetail()
   })
+
+  it('Search for a title', () => {
+    gotoApp()
+    checkBookListWith([
+      'Refactoring',
+      'Domain-driven design',
+      'Building Micro-service',
+    ])
+    performSearch('design')
+    checkBookListWith(['Domain-driven design'])
+  })
 })
