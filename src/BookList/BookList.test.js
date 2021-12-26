@@ -1,5 +1,11 @@
 import { render, screen } from '@testing-library/react'
-import BookList from '.'
+import { MemoryRouter } from 'react-router-dom'
+
+import BookList from './BookList'
+
+const renderWithRouter = component => ({
+  ...render(<MemoryRouter>{component}</MemoryRouter>),
+})
 
 describe('Booklist', () => {
   it('should return a loading if is fetching data', () => {
@@ -7,7 +13,7 @@ describe('Booklist', () => {
       loading: true,
     }
 
-    render(<BookList {...props} />)
+    renderWithRouter(<BookList {...props} />)
 
     const loading = screen.queryByText('Loading...')
 
@@ -19,7 +25,7 @@ describe('Booklist', () => {
       error: true,
     }
 
-    render(<BookList {...props} />)
+    renderWithRouter(<BookList {...props} />)
 
     const errorMessage = screen.queryByText('An unexpected error ocurred')
 
@@ -34,7 +40,7 @@ describe('Booklist', () => {
       ],
     }
 
-    render(<BookList {...props} />)
+    renderWithRouter(<BookList {...props} />)
 
     const bookTitles = screen.getAllByRole('heading')
 
