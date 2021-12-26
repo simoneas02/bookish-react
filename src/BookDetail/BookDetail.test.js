@@ -36,4 +36,16 @@ describe('BookDetail', () => {
 
     expect(description).toBeInTheDocument()
   })
+
+  it('should displays the book name when no description was given', () => {
+    const props = {
+      book: {
+        name: 'Refactoring',
+      },
+    }
+    renderWithRouter(<BookDetail {...props} />)
+    const description = screen.getAllByText('Refactoring')
+
+    expect(description).toHaveLength(2)
+  })
 })
