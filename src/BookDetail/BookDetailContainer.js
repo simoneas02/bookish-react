@@ -8,7 +8,7 @@ const BookDetailContainer = () => {
   const params = useParams()
   const URL = `http://localhost:8080/books/${params.id}`
 
-  const { data } = useRemoteService({}, URL)
+  const { data } = useRemoteService(URL, {})
 
   return <BookDetail book={data} />
 }
