@@ -6,6 +6,9 @@ import {
 } from '@material-ui/core'
 import { useStyles } from '../hooks/useStyles'
 
+const getDescriptionFor = ({ description, name }) =>
+  description ? description : name
+
 const BookDetail = ({ book }) => {
   const classes = useStyles()
 
@@ -29,7 +32,7 @@ const BookDetail = ({ book }) => {
             component="p"
             className={classes.description}
           >
-            {description}
+            {getDescriptionFor(book)}
           </Typography>
         </CardContent>
       </CardActionArea>
