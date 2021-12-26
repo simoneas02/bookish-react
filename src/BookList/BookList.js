@@ -9,9 +9,10 @@ const BookList = ({ books, loading, error }) => {
 
   return (
     <ul data-test="book-list">
-      {books.map(({ name }) => (
-        <li key={name} className="book-item">
+      {books.map(({ name, id }) => (
+        <li key={id} className="book-item">
           <h2 className="title">{name}</h2>
+          <a href={`/books/${id}`}>View Details</a>
         </li>
       ))}
     </ul>

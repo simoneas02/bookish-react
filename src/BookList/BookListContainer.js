@@ -1,6 +1,6 @@
 import axios from 'axios'
 import { useEffect, useState } from 'react'
-import BookList from '../BookList'
+import BookList from './BookList'
 import { useRemoteService } from '../hooks/useRemoteService'
 
 const BookListContainer = () => {
