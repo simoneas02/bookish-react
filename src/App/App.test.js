@@ -1,14 +1,11 @@
-import { render, screen } from '@testing-library/react'
-import { MemoryRouter } from 'react-router-dom'
+import { screen } from '@testing-library/react'
 import App from '.'
 
-const renderWithRouter = component => ({
-  ...render(<MemoryRouter>{component}</MemoryRouter>),
-})
+import { renderWithProviderRouter } from '../setupTests'
 
 describe('App', () => {
   it('should return a title', () => {
-    renderWithRouter(<App />)
+    renderWithProviderRouter(<App />)
 
     const title = screen.getByRole('heading', { name: 'Bookish' })
 

@@ -1,11 +1,8 @@
-import { render, screen } from '@testing-library/react'
-import { MemoryRouter } from 'react-router-dom'
+import { screen } from '@testing-library/react'
+import { renderWithRouter } from '../setupTests'
 
 import BookDetail from './BookDetail'
 
-const renderWithRouter = component => ({
-  ...render(<MemoryRouter>{component}</MemoryRouter>),
-})
 describe('BookDetail', () => {
   it('should renders title', () => {
     const props = {
