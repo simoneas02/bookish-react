@@ -13,6 +13,23 @@ export const fetchBooks = () => async (dispatch, getState) => {
     .then(res => {
       dispatch({ type: types.FETCH_BOOKS_SUCCESS, books: res.data })
     })
+    .catch(error => {
+      dispatch({ type: types.FETCH_BOOKS_FAILED, error: error.message })
+    })
+
+  return result
+}
+
+export const fetchABook = id => async dispatch => {
+  dispatch({ type: types.FETCH_BOOKS_PENDING })
+
+  const url = `http://localhost:8080/books/${id}`
+
+  const result = await axios
+    .get(url)
+    .then(res => {
+      dispatch({ type: types.FETCH_A_BOOK_SUCCESS, book: res.data })
+    })
     .catch(err => {
       dispatch({ type: types.FETCH_BOOKS_FAILED, err: err.message })
     })
