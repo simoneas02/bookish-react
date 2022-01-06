@@ -1,24 +1,30 @@
 import BookList from './BookList'
-import { useRemoteService } from '../hooks/useRemoteService'
 import { useEffect, useState } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
+import * as actions from '../redux/actions/actions'
+
+import bookListSelector from '../redux/selectors/selector'
 import SearchBox from './SearchBox/SearchBox'
 
 const BookListContainer = () => {
-  const URL = 'http://localhost:8080/books'
-  const { data, loading, error, setUrl } = useRemoteService(URL, [])
-
-  const [term, setTerm] = useState('')
+  const [term] = useState()
+  const dispatch = useDispatch()
 
   useEffect(() => {
-    setUrl(`http://localhost:8080/books?q=${term}`)
-  }, [term])
+    dispatch(actions.fetchBooks())
+  }, [term, dispatch])
 
-  const onSearch = event => setTerm(event.target.value)
+  const onSearch = event => {
+    dispatch(actions.setSearchTerm(event.target.value))
+    dispatch(actions.fetchBooks())
+  }
+
+  const { books, loading, error } = useSelector(bookListSelector)
 
   return (
     <>
       <SearchBox term={term} onSearch={onSearch} />
-      <BookList books={data} loading={loading} error={error} />
+      <BookList books={books} loading={loading} error={error} />
     </>
   )
 }
