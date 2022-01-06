@@ -15,8 +15,8 @@ export const renderWithRouter = component => ({
 
 export const renderWithProviderRouter = component => ({
   ...render(
-    <MemoryRouter>
-      <Provider store={store}>{component}</Provider>
-    </MemoryRouter>
+    <Provider store={store}>
+      <MemoryRouter>{component}</MemoryRouter>
+    </Provider>
   ),
 })
