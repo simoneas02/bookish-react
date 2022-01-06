@@ -1,9 +1,14 @@
 import axios from 'axios'
 import * as actions from '../redux/actions/actions'
-import store from './store'
+import store from '.'
 
 describe('Store', () => {
-  const books = [{ id: 1, name: 'Refactoring' }]
+  const books = [
+    {
+      name: 'Refactoring',
+      id: 1,
+    },
+  ]
 
   it('Fetch books from remote', () => {
     axios.get = jest
@@ -25,7 +30,7 @@ describe('Store', () => {
 
     store.dispatch(actions.setSearchTerm('domain'))
 
-    return store.dispatch(actions.fetchBooks()).then(() => {
+    return store.dispatch(actions.fetchBooks('domain')).then(() => {
       const state = store.getState()
 
       expect(state.term).toEqual('domain')
