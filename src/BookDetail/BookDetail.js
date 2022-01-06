@@ -6,8 +6,8 @@ import {
 } from '@material-ui/core'
 import { useStyles } from '../hooks/useStyles'
 
-const getDescriptionFor = ({ description, name }) =>
-  description ? description : name
+const getDescriptionFor = book =>
+  book?.description ? book?.description : book?.name
 
 const BookDetail = ({ book }) => {
   const classes = useStyles()
@@ -23,7 +23,7 @@ const BookDetail = ({ book }) => {
             className={classes.name}
             data-test="book-title"
           >
-            {book.name}
+            {book?.name}
           </Typography>
 
           <Typography

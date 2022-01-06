@@ -23,7 +23,7 @@ const BookList = ({ books, loading, error }) => {
 
   return (
     <Grid container spacing={3} data-test="book-list">
-      {books.map(({ name, id }) => (
+      {books?.map(({ name, id }) => (
         <Grid
           item
           xs={4}
