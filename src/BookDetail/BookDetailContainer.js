@@ -1,16 +1,22 @@
+import { useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
-
-import { useRemoteService } from '../hooks/useRemoteService'
+import * as actions from '../redux/actions/actions'
 
 import BookDetail from './BookDetail'
 
 const BookDetailContainer = () => {
-  const params = useParams()
-  const URL = `http://localhost:8080/books/${params.id}`
+  const { id } = useParams()
 
-  const { data } = useRemoteService(URL, {})
+  const dispatch = useDispatch()
 
-  return <BookDetail book={data} />
+  useEffect(() => {
+    dispatch(actions.fetchABook(id))
+  }, [dispatch, id])
+
+  const book = useSelector(state => state.book)
+
+  return <BookDetail book={book} />
 }
 
 export default BookDetailContainer
