@@ -45,4 +45,28 @@ describe('BookDetail', () => {
 
     expect(description).toHaveLength(2)
   })
+
+  it('should renders reviews', () => {
+    const props = {
+      book: {
+        name: 'Refactoring',
+        description:
+          'Martin Fowler’s Refactoring defined core ideas and techniques that hundreds of thousands of developers have used to improve their software.',
+        reviews: [
+          {
+            name: 'Juntao',
+            date: '2018/06/21',
+            content: 'Excellent work, really impressed by your efforts',
+          },
+        ],
+      },
+    }
+
+    renderWithRouter(<BookDetail {...props} />)
+
+    const reviews = screen.getAllByRole('listitem')
+
+    expect(reviews).toHaveLength(1)
+    expect(screen.getByText('Juntao')).toBeInTheDocument()
+  })
 })
