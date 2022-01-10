@@ -5,11 +5,12 @@ import {
   Typography,
 } from '@material-ui/core'
 import { useStyles } from '../hooks/useStyles'
+import ReviewList from './ReviewList'
 
-const getDescriptionFor = book =>
-  book?.description ? book?.description : book?.name
+const getDescriptionFor = ({ name, description }) =>
+  description ? description : name
 
-const BookDetail = ({ book }) => {
+const BookDetail = ({ book: { name, description, reviews } }) => {
   const classes = useStyles()
 
   return (
@@ -23,17 +24,17 @@ const BookDetail = ({ book }) => {
             className={classes.name}
             data-test="book-title"
           >
-            {book?.name}
+            {name}
           </Typography>
-
           <Typography
             variant="body2"
             color="textSecondary"
             component="p"
             className={classes.description}
           >
-            {getDescriptionFor(book)}
+            {getDescriptionFor({ name, description })}
           </Typography>
+          {reviews && <ReviewList reviews={reviews} />}
         </CardContent>
       </CardActionArea>
     </Card>
