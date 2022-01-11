@@ -41,3 +41,20 @@ export const setSearchTerm = term => ({
   type: types.SET_SEARCH_TERM,
   term,
 })
+
+export const saveReview = (id, review) => async dispatch => {
+  dispatch({ type: types.PENDING })
+
+  const url = `http://localhost:8080/books/${id}`
+
+  const result = await axios
+    .post(url, review)
+    .then(res => {
+      dispatch({ type: types.SAVE_REVIEW_SUCCESS, review: res.data })
+    })
+    .catch(err => {
+      dispatch({ type: types.FAILED, err: err.message })
+    })
+
+  return result
+}
