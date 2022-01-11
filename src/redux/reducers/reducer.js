@@ -17,6 +17,9 @@ const reducer = (state = [], action) => {
     case types.SET_SEARCH_TERM:
       return { ...state, term: action.term }
 
+    case types.SAVE_REVIEW_SUCCESS:
+      return { ...state, review: action.review, loading: false, error: false }
+
     default:
       return state
   }
