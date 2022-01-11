@@ -69,4 +69,24 @@ describe('BookDetail', () => {
     expect(reviews).toHaveLength(1)
     expect(screen.getByText('Juntao')).toBeInTheDocument()
   })
+
+  it('should renders reviews form', () => {
+    const props = {
+      book: {
+        name: 'Refactoring',
+        description:
+          'Martin Fowler’s Refactoring defined core ideas and techniques that hundreds of thousands of developers have used to improve their software.',
+      },
+    }
+
+    renderWithRouter(<BookDetail {...props} />)
+
+    const nameInput = screen.getAllByText('Name')[0]
+    const contentTextArea = screen.getAllByText('Content')[0]
+    const submitButton = screen.getByRole('button', { name: 'Submit' })
+
+    expect(nameInput).toBeInTheDocument()
+    expect(contentTextArea).toBeInTheDocument()
+    expect(submitButton).toBeInTheDocument()
+  })
 })
