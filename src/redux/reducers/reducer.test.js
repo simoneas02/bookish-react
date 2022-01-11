@@ -23,4 +23,19 @@ describe('Reducer', () => {
     const state = reducer([], action)
     expect(state.books).toBe(books)
   })
+
+  it('Add reviews to state when request successful', () => {
+    const review = {
+      name: 'Juntao Qiu',
+      content: 'Excellent work!',
+    }
+
+    const action = {
+      type: types.SAVE_REVIEW_SUCCESS,
+      review,
+    }
+
+    const state = reducer([], action)
+    expect(state.review).toBe(review)
+  })
 })
