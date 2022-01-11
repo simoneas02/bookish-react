@@ -1,21 +1,26 @@
 import {
+  Button,
   Card,
-  CardActionArea,
   CardContent,
+  TextField,
   Typography,
 } from '@material-ui/core'
+import { useState } from 'react'
 import { useStyles } from '../hooks/useStyles'
 import ReviewList from './ReviewList'
 
-const getDescriptionFor = ({ name, description }) =>
-  description ? description : name
+const getDescriptionFor = book =>
+  book?.description ? book?.description : book?.name
 
-const BookDetail = ({ book: { name, description, reviews } }) => {
+const BookDetail = ({ book }) => {
   const classes = useStyles()
+
+  const [name, setName] = useState('')
+  const [content, setContent] = useState('')
 
   return (
     <Card>
-      <CardActionArea>
+      <div>
         <CardContent>
           <Typography
             gutterBottom
@@ -24,7 +29,7 @@ const BookDetail = ({ book: { name, description, reviews } }) => {
             className={classes.name}
             data-test="book-title"
           >
-            {name}
+            {book?.name}
           </Typography>
           <Typography
             variant="body2"
@@ -32,11 +37,36 @@ const BookDetail = ({ book: { name, description, reviews } }) => {
             component="p"
             className={classes.description}
           >
-            {getDescriptionFor({ name, description })}
+            {getDescriptionFor(book)}
           </Typography>
-          {reviews && <ReviewList reviews={reviews} />}
+
+          <form noValidate autoComplete="off">
+            <TextField
+              label="Name"
+              name="name"
+              margin="normal"
+              variant="outlined"
+              value={name}
+              onChange={e => setName(e.target.value)}
+            />
+            <TextField
+              name="content"
+              label="Content"
+              margin="normal"
+              variant="outlined"
+              multiline
+              maxRows="4"
+              value={content}
+              onChange={e => setContent(e.target.value)}
+            />
+            <Button variant="contained" color="primary" name="submit">
+              Submit
+            </Button>
+          </form>
+
+          {book?.reviews && <ReviewList reviews={book?.reviews} />}
         </CardContent>
-      </CardActionArea>
+      </div>
     </Card>
   )
 }
