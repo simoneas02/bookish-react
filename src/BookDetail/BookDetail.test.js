@@ -1,5 +1,5 @@
 import { screen } from '@testing-library/react'
-import { renderWithRouter } from '../setupTests'
+import { renderWithProviderRouter } from '../setupTests'
 
 import BookDetail from './BookDetail'
 
@@ -11,7 +11,7 @@ describe('BookDetail', () => {
       },
     }
 
-    renderWithRouter(<BookDetail {...props} />)
+    renderWithProviderRouter(<BookDetail {...props} />)
     const title = screen.getByRole('heading', { name: 'Refactoring' })
 
     expect(title).toBeInTheDocument()
@@ -26,7 +26,7 @@ describe('BookDetail', () => {
       },
     }
 
-    renderWithRouter(<BookDetail {...props} />)
+    renderWithProviderRouter(<BookDetail {...props} />)
     const description = screen.getByText(
       "Martin Fowler's Refactoring defined core ideas and techniques that hundreds of thousands of developers have used to improve their software."
     )
@@ -40,7 +40,7 @@ describe('BookDetail', () => {
         name: 'Refactoring',
       },
     }
-    renderWithRouter(<BookDetail {...props} />)
+    renderWithProviderRouter(<BookDetail {...props} />)
     const description = screen.getAllByText('Refactoring')
 
     expect(description).toHaveLength(2)
@@ -62,7 +62,7 @@ describe('BookDetail', () => {
       },
     }
 
-    renderWithRouter(<BookDetail {...props} />)
+    renderWithProviderRouter(<BookDetail {...props} />)
 
     const reviews = screen.getAllByRole('listitem')
 
@@ -79,7 +79,7 @@ describe('BookDetail', () => {
       },
     }
 
-    renderWithRouter(<BookDetail {...props} />)
+    renderWithProviderRouter(<BookDetail {...props} />)
 
     const nameInput = screen.getAllByText('Name')[0]
     const contentTextArea = screen.getAllByText('Content')[0]
