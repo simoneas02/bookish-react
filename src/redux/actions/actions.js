@@ -3,7 +3,7 @@ import axios from 'axios'
 import * as types from '../types'
 
 export const fetchBooks = () => async (dispatch, getState) => {
-  dispatch({ type: types.FETCH_BOOKS_PENDING })
+  dispatch({ type: types.PENDING })
 
   const state = getState()
   const url = `http://localhost:8080/books?q=${state.term || ''}`
@@ -14,14 +14,14 @@ export const fetchBooks = () => async (dispatch, getState) => {
       dispatch({ type: types.FETCH_BOOKS_SUCCESS, books: res.data })
     })
     .catch(error => {
-      dispatch({ type: types.FETCH_BOOKS_FAILED, error: error.message })
+      dispatch({ type: types.FAILED, error: error.message })
     })
 
   return result
 }
 
 export const fetchABook = id => async dispatch => {
-  dispatch({ type: types.FETCH_BOOKS_PENDING })
+  dispatch({ type: types.PENDING })
 
   const url = `http://localhost:8080/books/${id}`
 
@@ -31,7 +31,7 @@ export const fetchABook = id => async dispatch => {
       dispatch({ type: types.FETCH_A_BOOK_SUCCESS, book: res.data })
     })
     .catch(err => {
-      dispatch({ type: types.FETCH_BOOKS_FAILED, err: err.message })
+      dispatch({ type: types.FAILED, err: err.message })
     })
 
   return result

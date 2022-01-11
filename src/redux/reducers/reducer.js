@@ -2,10 +2,10 @@ import * as types from '../types'
 
 const reducer = (state = [], action) => {
   switch (action.type) {
-    case types.FETCH_BOOKS_PENDING:
+    case types.PENDING:
       return { ...state, loading: true }
 
-    case types.FETCH_BOOKS_FAILED:
+    case types.FAILED:
       return { ...state, error: true, loading: false }
 
     case types.FETCH_A_BOOK_SUCCESS:
@@ -16,6 +16,7 @@ const reducer = (state = [], action) => {
 
     case types.SET_SEARCH_TERM:
       return { ...state, term: action.term }
+
     default:
       return state
   }

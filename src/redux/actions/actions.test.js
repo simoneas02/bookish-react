@@ -32,7 +32,7 @@ describe('BookListContainer related actions', () => {
       .mockImplementation(() => Promise.resolve({ data: books }))
 
     const expectedActions = [
-      { type: types.FETCH_BOOKS_PENDING },
+      { type: types.PENDING },
       { type: types.FETCH_BOOKS_SUCCESS, books },
     ]
 
@@ -51,8 +51,8 @@ describe('BookListContainer related actions', () => {
       )
 
     const expectedActions = [
-      { type: types.FETCH_BOOKS_PENDING },
-      { type: types.FETCH_BOOKS_FAILED, error: 'Something went wrong' },
+      { type: types.PENDING },
+      { type: types.FAILED, error: 'Something went wrong' },
     ]
 
     const store = mockStore({ books: [] })
