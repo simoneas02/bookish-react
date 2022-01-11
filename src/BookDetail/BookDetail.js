@@ -6,7 +6,11 @@ import {
   Typography,
 } from '@material-ui/core'
 import { useState } from 'react'
+import { useDispatch } from 'react-redux'
 import { useStyles } from '../hooks/useStyles'
+
+import * as actions from '../redux/actions/actions'
+
 import ReviewList from './ReviewList'
 
 const getDescriptionFor = book =>
@@ -14,6 +18,7 @@ const getDescriptionFor = book =>
 
 const BookDetail = ({ book }) => {
   const classes = useStyles()
+  const dispatch = useDispatch()
 
   const [name, setName] = useState('')
   const [content, setContent] = useState('')
@@ -59,7 +64,14 @@ const BookDetail = ({ book }) => {
               value={content}
               onChange={e => setContent(e.target.value)}
             />
-            <Button variant="contained" color="primary" name="submit">
+            <Button
+              variant="contained"
+              color="primary"
+              name="submit"
+              onClick={() =>
+                dispatch(actions.saveReview(book?.id, book?.reviews))
+              }
+            >
               Submit
             </Button>
           </form>
