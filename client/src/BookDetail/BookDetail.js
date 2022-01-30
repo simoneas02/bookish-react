@@ -1,15 +1,8 @@
-import {
-  Button,
-  Card,
-  CardContent,
-  TextField,
-  Typography,
-} from '@material-ui/core'
-import { useState } from 'react'
-import { useDispatch } from 'react-redux'
+import { Card, CardContent, Typography } from '@material-ui/core'
+
 import { useStyles } from '../hooks/useStyles'
 
-import * as actions from '../redux/actions/actions'
+import ReviewForm from './ReviewForm'
 
 import ReviewList from './ReviewList'
 
@@ -18,10 +11,6 @@ const getDescriptionFor = book =>
 
 const BookDetail = ({ book }) => {
   const classes = useStyles()
-  const dispatch = useDispatch()
-
-  const [name, setName] = useState('')
-  const [content, setContent] = useState('')
 
   return (
     <Card>
@@ -45,36 +34,7 @@ const BookDetail = ({ book }) => {
             {getDescriptionFor(book)}
           </Typography>
 
-          <form noValidate autoComplete="off">
-            <TextField
-              label="Name"
-              name="name"
-              margin="normal"
-              variant="outlined"
-              value={name}
-              onChange={e => setName(e.target.value)}
-            />
-            <TextField
-              name="content"
-              label="Content"
-              margin="normal"
-              variant="outlined"
-              multiline
-              maxRows="4"
-              value={content}
-              onChange={e => setContent(e.target.value)}
-            />
-            <Button
-              variant="contained"
-              color="primary"
-              name="submit"
-              onClick={() =>
-                dispatch(actions.saveReview(book?.id, book?.reviews))
-              }
-            >
-              Submit
-            </Button>
-          </form>
+          <ReviewForm id={book?.id} />
 
           {book?.reviews && <ReviewList reviews={book?.reviews} />}
         </CardContent>
