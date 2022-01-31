@@ -1,0 +1,20 @@
+{
+  "name": "stub-server",
+  "version": "1.0.0",
+  "description": "Just a json server",
+  "main": "server.js",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "url": "^0.11.0"
+  },
+  "devDependencies": {
+    "json-server": "^0.17.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js",
+    "stub-server": "json-server --watch ./stub-server/books.json --port 3000"
+  },
+  "author": "Simone Amorim",
+  "license": "ISC"
+}
