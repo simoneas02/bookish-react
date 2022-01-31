@@ -98,13 +98,20 @@ describe('BookListContainer related actions', () => {
       content: 'Excellent work!',
     }
 
+    const url = 'http://localhost:8080/books/1/reviews'
+
+    const config = {
+      headers: { 'Content-Type': 'application/json' },
+    }
+
     axios.post = jest.fn().mockImplementation(() => Promise.resolve({}))
     const store = mockStore({ books: [], term: '' })
 
     return store.dispatch(saveReview(1, review)).then(() => {
       expect(axios.post).toHaveBeenCalledWith(
-        'http://localhost:8080/books/1',
-        review
+        url,
+        JSON.stringify(review),
+        config
       )
     })
   })
