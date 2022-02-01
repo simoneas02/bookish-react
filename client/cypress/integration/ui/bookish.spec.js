@@ -49,20 +49,30 @@ const checkBookDetail = () => {
   cy.get('[data-test="book-title"]').contains('Refactoring')
 }
 
-export const performSearch = term => {
+const composeReview = (name, content) => {
+  cy.get('input[name="name"]').type(name)
+  cy.get('textarea[name="content"]').type(content)
+  cy.get('button[name="submit"]').click()
+}
+
+const checkReview = () => {
+  cy.get('ul[data-test="reviews-container"]').should('have.length', 1)
+}
+
+const performSearch = term => {
   cy.get('[data-test="search"] input').type(term)
 }
 
 describe('Bookish application', () => {
+  afterEach(async () => {
+    cleanUpStubBooks()
+  })
+
   beforeEach(() => {
     feedStubBooks()
   })
 
   before(async () => {
-    cleanUpStubBooks()
-  })
-
-  afterEach(async () => {
     cleanUpStubBooks()
   })
 
@@ -93,5 +103,13 @@ describe('Bookish application', () => {
     ])
     performSearch('design')
     checkBookListWith(['Domain-driven design'])
+  })
+
+  it('Write a review for a book', () => {
+    gotoApp()
+    gotoNthBookInTheList(0)
+    checkBookDetail()
+    composeReview('Juntao Qiu', 'Excellent work')
+    checkReview()
   })
 })
