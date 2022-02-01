@@ -19,4 +19,8 @@ export const useStyles = makeStyles(theme => ({
     overflow: 'hidden',
     textOverflow: 'ellipsis',
   },
+  reviewList: { listStyle: 'none' },
+  reviewName: { color: 'darkgray' },
+  reviewDate: { color: 'blue' },
+  reviewContent: { color: 'purple' },
 }))
