@@ -7,9 +7,6 @@ const middlewares = jsonServer.defaults()
 
 const _ = require('lodash')
 
-server.use(middlewares)
-server.use(jsonServer.bodyParser)
-
 router.render = function (req, res) {
   var data = res.locals.data
   if (data.bookId) {
@@ -66,14 +63,15 @@ server.use((req, res, next) => {
     next()
   }
 })
-
-server.use(router)
+server.use(middlewares)
+server.use(jsonServer.bodyParser)
 
 const buildRewrite = relations => {
   return _.reduce(
     relations,
     (sum, embed, resources) => {
       sum[`/${resources}/:id`] = `/${resources}/:id?_embed=${embed}`
+
       return sum
     },
     {}
