@@ -1,7 +1,9 @@
-const ReviewList = ({ reviews }) => (
+import Review from './Review'
+
+const ReviewList = ({ reviews = [] }) => (
   <ul data-test="reviews-container">
-    {reviews?.map(({ name, date }) => (
-      <li key={`${name}-${date}`}>{name}</li>
+    {reviews?.map((review, key) => (
+      <Review key={`${key}-${review.date}`} review={review} />
     ))}
   </ul>
 )
