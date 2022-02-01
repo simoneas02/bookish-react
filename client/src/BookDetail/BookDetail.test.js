@@ -68,6 +68,10 @@ describe('BookDetail', () => {
 
     expect(reviews).toHaveLength(1)
     expect(screen.getByText('Juntao')).toBeInTheDocument()
+    expect(screen.getByText('2018/06/21')).toBeInTheDocument()
+    expect(
+      screen.getByText('Excellent work, really impressed by your efforts')
+    ).toBeInTheDocument()
   })
 
   it('should renders reviews form', () => {
