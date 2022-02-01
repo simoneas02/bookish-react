@@ -5,7 +5,7 @@ import { useDispatch } from 'react-redux'
 import { useStyles } from '../hooks/useStyles'
 import * as actions from '../redux/actions/actions'
 
-const ReviewForm = ({ id }) => {
+const ReviewForm = ({ bookId }) => {
   const classes = useStyles()
   const [name, setName] = useState('')
   const [content, setContent] = useState('')
@@ -42,7 +42,9 @@ const ReviewForm = ({ id }) => {
             variant="contained"
             color="primary"
             name="submit"
-            onClick={() => dispatch(actions.saveReview(id, { name, content }))}
+            onClick={() =>
+              dispatch(actions.saveReview(bookId, { bookId, name, content }))
+            }
           >
             Submit
           </Button>
