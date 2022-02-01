@@ -32,7 +32,7 @@ const BookDetail = ({ book }) => {
         {getDescriptionFor(book)}
       </Typography>
 
-      <ReviewForm id={book?.id} />
+      <ReviewForm bookId={book?.id} />
 
       {book?.reviews && <ReviewList reviews={book?.reviews} />}
     </div>
