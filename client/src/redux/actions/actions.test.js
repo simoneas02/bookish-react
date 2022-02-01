@@ -108,11 +108,7 @@ describe('BookListContainer related actions', () => {
     const store = mockStore({ books: [], term: '' })
 
     return store.dispatch(saveReview(1, review)).then(() => {
-      expect(axios.post).toHaveBeenCalledWith(
-        url,
-        JSON.stringify(review),
-        config
-      )
+      expect(axios.post).toHaveBeenCalledWith(url, review, config)
     })
   })
 })
