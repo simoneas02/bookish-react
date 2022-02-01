@@ -1,14 +1,9 @@
 import { useState } from 'react'
-import { Button, Grid, makeStyles, TextField } from '@material-ui/core'
+import { Button, Grid, TextField } from '@material-ui/core'
 import { useDispatch } from 'react-redux'
 
+import { useStyles } from '../hooks/useStyles'
 import * as actions from '../redux/actions/actions'
-
-const useStyles = makeStyles(() => ({
-  form: {
-    margin: '1rem 0',
-  },
-}))
 
 const ReviewForm = ({ id }) => {
   const classes = useStyles()
