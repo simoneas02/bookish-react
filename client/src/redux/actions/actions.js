@@ -46,11 +46,12 @@ export const saveReview = (id, review) => {
   const config = {
     headers: { 'Content-Type': 'application/json' },
   }
+
   return async dispatch => {
     dispatch({ type: types.PENDING })
     const url = `http://localhost:8080/books/${id}/reviews`
     try {
-      const result = await axios.post(url, JSON.stringify(review), config)
+      const result = await axios.post(url, review, config)
       dispatch({ type: types.SAVE_REVIEW_SUCCESS, review: result.data })
       dispatch(fetchABook(id))
     } catch (err) {
