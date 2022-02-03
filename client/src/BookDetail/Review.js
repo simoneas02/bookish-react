@@ -1,9 +1,12 @@
-import { Typography } from '@material-ui/core'
+import { Button, Grid, Typography } from '@material-ui/core'
+import { useState } from 'react'
 
 import { useStyles } from '../hooks/useStyles'
 
 const Review = ({ review: { name, date, content } }) => {
   const classes = useStyles()
+
+  const [editing, setEditing] = useState(false)
 
   return (
     <li className={classes.reviewList}>
@@ -33,6 +36,17 @@ const Review = ({ review: { name, date, content } }) => {
       >
         {content}
       </Typography>
+
+      <Grid item xs={12}>
+        <Button
+          variant="contained"
+          color="primary"
+          name="submit"
+          onClick={() => setEditing(!editing)}
+        >
+          {!editing ? 'Edit' : 'Submit'}
+        </Button>
+      </Grid>
     </li>
   )
 }
