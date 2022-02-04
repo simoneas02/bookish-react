@@ -1,13 +1,25 @@
 import { Button, Grid, TextField, Typography } from '@material-ui/core'
 import { useState } from 'react'
+import { useDispatch } from 'react-redux'
+import * as actions from '../redux/actions/actions'
 
 import { useStyles } from '../hooks/useStyles'
 
-const Review = ({ review: { name, date, content } }) => {
+const Review = ({ review }) => {
   const classes = useStyles()
 
   const [editing, setEditing] = useState(false)
-  const [editingContent, setEditingContent] = useState(content)
+  const [content, setContent] = useState(review.content)
+
+  const dispatch = useDispatch()
+
+  const clickHandler = () => {
+    if (editing) {
+      dispatch(actions.updateReview(review.bookId, { ...review, content }))
+    }
+
+    setEditing(!editing)
+  }
 
   return (
     <li className={classes.reviewList}>
@@ -17,7 +29,7 @@ const Review = ({ review: { name, date, content } }) => {
         component="p"
         className={classes.reviewName}
       >
-        {name}
+        {review.name}
       </Typography>
 
       <Typography
@@ -26,7 +38,7 @@ const Review = ({ review: { name, date, content } }) => {
         component="p"
         className={classes.reviewDate}
       >
-        {date}
+        {review.date}
       </Typography>
 
       {!editing ? (
@@ -36,7 +48,7 @@ const Review = ({ review: { name, date, content } }) => {
           component="p"
           className={classes.reviewContent}
         >
-          {editingContent}
+          {content}
         </Typography>
       ) : (
         <TextField
@@ -46,8 +58,8 @@ const Review = ({ review: { name, date, content } }) => {
           variant="outlined"
           multiline
           maxRows="4"
-          value={editingContent}
-          onChange={event => setEditingContent(event.target.value)}
+          value={content}
+          onChange={event => setContent(event.target.value)}
         />
       )}
 
@@ -56,7 +68,7 @@ const Review = ({ review: { name, date, content } }) => {
           variant="contained"
           color="primary"
           name="submit"
-          onClick={() => setEditing(!editing)}
+          onClick={clickHandler}
         >
           {!editing ? 'Edit' : 'Submit'}
         </Button>
