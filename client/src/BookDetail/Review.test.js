@@ -44,4 +44,29 @@ describe('Review', () => {
     const submitButton = await screen.findByRole('button', { name: 'Submit' })
     expect(submitButton).toBeInTheDocument()
   })
+
+  it('should copy content to a textarea for editing', async () => {
+    const props = {
+      review: {
+        name: 'Juntao',
+        date: '2018/06/21',
+        content: 'Some review content',
+      },
+    }
+
+    renderWithRouter(<Review {...props} />)
+
+    const content = await screen.findByText('Some review content')
+    const editButton = await screen.findByRole('button', { name: 'Edit' })
+
+    expect(content).toBeInTheDocument()
+    expect(editButton).toBeInTheDocument()
+
+    userEvent.click(editButton)
+
+    const editContent = await screen.findByRole('textbox')
+
+    expect(editContent).toBeInTheDocument()
+    expect(await screen.findByText('Some review content')).toBeInTheDocument()
+  })
 })
