@@ -59,3 +59,21 @@ export const saveReview = (id, review) => {
     }
   }
 }
+
+export const updateReview = (id, review) => {
+  const config = {
+    headers: { 'Content-Type': 'application/json' },
+  }
+
+  return async dispatch => {
+    dispatch({ type: types.PENDING })
+    const url = `http://localhost:8080/reviews/${id}`
+    try {
+      const result = await axios.put(url, review, config)
+      dispatch({ type: types.SAVE_REVIEW_SUCCESS, review: result.data })
+      dispatch(fetchABook(id))
+    } catch (err) {
+      dispatch({ type: types.FAILED, err: err.message })
+    }
+  }
+}
