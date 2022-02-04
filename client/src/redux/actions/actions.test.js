@@ -3,7 +3,13 @@ import configureMockStore from 'redux-mock-store'
 import thunk from 'redux-thunk'
 
 import * as types from '../types'
-import { setSearchTerm, fetchBooks, fetchABook, saveReview } from './actions'
+import {
+  setSearchTerm,
+  fetchBooks,
+  fetchABook,
+  saveReview,
+  updateReview,
+} from './actions'
 
 const middlewares = [thunk]
 const mockStore = configureMockStore(middlewares)
@@ -109,6 +115,26 @@ describe('BookListContainer related actions', () => {
 
     return store.dispatch(saveReview(1, review)).then(() => {
       expect(axios.post).toHaveBeenCalledWith(url, review, config)
+    })
+  })
+
+  it('Update a review for a book', () => {
+    const review = {
+      name: 'Juntao Qiu',
+      content: 'Excellent work!',
+    }
+
+    const url = 'http://localhost:8080/reviews/1'
+
+    const config = {
+      headers: { 'Content-Type': 'application/json' },
+    }
+
+    axios.put = jest.fn().mockImplementation(() => Promise.resolve({}))
+    const store = mockStore({ books: [], term: '' })
+
+    return store.dispatch(updateReview(1, review)).then(() => {
+      expect(axios.put).toHaveBeenCalledWith(url, review, config)
     })
   })
 })
