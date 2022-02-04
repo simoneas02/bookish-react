@@ -1,6 +1,6 @@
 import { screen } from '@testing-library/react'
 
-import { renderWithRouter } from '../setupTests'
+import { renderWithProviderRouter } from '../setupTests'
 
 import ReviewList from './ReviewList'
 
@@ -10,7 +10,7 @@ describe('ReviewList', () => {
       reviews: [],
     }
 
-    renderWithRouter(<ReviewList {...props} />)
+    renderWithProviderRouter(<ReviewList {...props} />)
 
     const reviews = screen.getByRole('list')
     expect(reviews).toBeInTheDocument()
@@ -28,7 +28,7 @@ describe('ReviewList', () => {
       ],
     }
 
-    renderWithRouter(<ReviewList {...props} />)
+    renderWithProviderRouter(<ReviewList {...props} />)
 
     const reviews = screen.getAllByRole('listitem')
     expect(reviews).toHaveLength(2)
