@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
-import { renderWithRouter } from '../setupTests'
+import { renderWithProviderRouter } from '../setupTests'
 
 import Review from './Review'
 
@@ -15,7 +15,7 @@ describe('Review', () => {
       },
     }
 
-    renderWithRouter(<Review {...props} />)
+    renderWithProviderRouter(<Review {...props} />)
 
     expect(screen.getByRole('listitem')).toBeInTheDocument()
     expect(screen.getByText('Juntao')).toBeInTheDocument()
@@ -34,7 +34,7 @@ describe('Review', () => {
       },
     }
 
-    renderWithRouter(<Review {...props} />)
+    renderWithProviderRouter(<Review {...props} />)
 
     const editButton = await screen.findByRole('button', { name: 'Edit' })
     expect(editButton).toBeInTheDocument()
@@ -54,7 +54,7 @@ describe('Review', () => {
       },
     }
 
-    renderWithRouter(<Review {...props} />)
+    renderWithProviderRouter(<Review {...props} />)
 
     const content = await screen.findByText('Some review content')
     const editButton = await screen.findByRole('button', { name: 'Edit' })
