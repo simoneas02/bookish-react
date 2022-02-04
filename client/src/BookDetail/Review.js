@@ -1,4 +1,4 @@
-import { Button, Grid, Typography } from '@material-ui/core'
+import { Button, Grid, TextField, Typography } from '@material-ui/core'
 import { useState } from 'react'
 
 import { useStyles } from '../hooks/useStyles'
@@ -7,6 +7,7 @@ const Review = ({ review: { name, date, content } }) => {
   const classes = useStyles()
 
   const [editing, setEditing] = useState(false)
+  const [editingContent, setEditingContent] = useState(content)
 
   return (
     <li className={classes.reviewList}>
@@ -28,14 +29,27 @@ const Review = ({ review: { name, date, content } }) => {
         {date}
       </Typography>
 
-      <Typography
-        variant="body2"
-        color="textSecondary"
-        component="p"
-        className={classes.reviewContent}
-      >
-        {content}
-      </Typography>
+      {!editing ? (
+        <Typography
+          variant="body2"
+          color="textSecondary"
+          component="p"
+          className={classes.reviewContent}
+        >
+          {editingContent}
+        </Typography>
+      ) : (
+        <TextField
+          name="editContent"
+          label="Content"
+          margin="normal"
+          variant="outlined"
+          multiline
+          maxRows="4"
+          value={editingContent}
+          onChange={event => setEditingContent(event.target.value)}
+        />
+      )}
 
       <Grid item xs={12}>
         <Button
