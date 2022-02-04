@@ -2,6 +2,7 @@ import { screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 
 import { renderWithProviderRouter } from '../setupTests'
+import * as actions from '../redux/actions/actions'
 
 import Review from './Review'
 
@@ -68,5 +69,45 @@ describe('Review', () => {
 
     expect(editContent).toBeInTheDocument()
     expect(await screen.findByText('Some review content')).toBeInTheDocument()
+  })
+
+  it('should send requests', async () => {
+    const fakeUpdateReview = () => () => Promise.resolve({})
+
+    jest
+      .spyOn(actions, 'updateReview')
+      .mockImplementation(() => fakeUpdateReview)
+
+    const props = {
+      bookId: 123,
+      review: {
+        id: 2,
+        bookId: 1,
+        name: 'Juntao',
+        date: '2018/06/21',
+        content: 'Some review content',
+      },
+    }
+
+    renderWithProviderRouter(<Review {...props} />)
+
+    const editButton = await screen.findByRole('button', { name: 'Edit' })
+
+    userEvent.click(editButton)
+
+    const editContent = await screen.findByRole('textbox')
+    const submitButton = await screen.findByRole('button', { name: 'Submit' })
+
+    userEvent.clear(editContent)
+    userEvent.type(editContent, 'New review content')
+    userEvent.click(submitButton)
+
+    expect(actions.updateReview).toHaveBeenCalledWith(1, {
+      bookId: 1,
+      content: 'New review content',
+      name: 'Juntao',
+      date: '2018/06/21',
+      id: 2,
+    })
   })
 })
