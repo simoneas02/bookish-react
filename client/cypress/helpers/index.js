@@ -40,3 +40,7 @@ export const checkBookListWith = (expectation = []) => {
     expect(titles).to.deep.equal(expectation)
   })
 }
+
+export const performSearch = term => {
+  cy.get('[data-test="search"] input').type(term)
+}
