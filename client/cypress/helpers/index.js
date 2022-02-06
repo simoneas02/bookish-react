@@ -29,3 +29,14 @@ export const gotoApp = () => {
 export const checkAppTitle = title => {
   cy.get('[data-test="heading"]').contains(title)
 }
+
+export const checkBookListWith = (expectation = []) => {
+  cy.get('div[data-test="book-list"]').should('exist')
+
+  cy.get('div[data-test="book-item"]').should(books => {
+    expect(books).to.have.length(expectation.length)
+
+    const titles = [...books].map(book => book.querySelector('h2').innerHTML)
+    expect(titles).to.deep.equal(expectation)
+  })
+}
