@@ -2,7 +2,7 @@ const jsonServer = require('json-server')
 const url = require('url')
 
 const server = jsonServer.create()
-const router = jsonServer.router('./stub-server/books.json')
+const router = jsonServer.router('db.json')
 const middlewares = jsonServer.defaults()
 
 const _ = require('lodash')
