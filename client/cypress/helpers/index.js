@@ -44,3 +44,17 @@ export const checkBookListWith = (expectation = []) => {
 export const performSearch = term => {
   cy.get('[data-test="search"] input').type(term)
 }
+
+export const gotoNthBookInTheList = nth => {
+  cy.get('[data-test="book-item"]').contains('View Details').eq(nth).click()
+}
+
+export const composeReview = (name, content) => {
+  cy.get('input[name="name"]').type(name)
+  cy.get('textarea[name="content"]').type(content)
+  cy.get('button[name="submit"]').click()
+}
+
+export const checkReview = content => {
+  cy.get('ul[data-test="reviews-container"]').contains(content)
+}
