@@ -6,7 +6,7 @@ import bookListSelector from '../redux/selectors/selector'
 
 import BookDetail from './BookDetail'
 
-const BookDetailContainer = () => {
+const BookDetailsContainer = () => {
   const { id } = useParams()
 
   const dispatch = useDispatch()
@@ -15,9 +15,9 @@ const BookDetailContainer = () => {
     dispatch(actions.fetchABook(id))
   }, [dispatch, id])
 
-  const { book } = useSelector(bookListSelector)
+  const { detail } = useSelector(bookListSelector)
 
-  return <BookDetail book={book} />
+  return <BookDetail book={detail} />
 }
 
-export default BookDetailContainer
+export default BookDetailsContainer
