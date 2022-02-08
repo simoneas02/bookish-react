@@ -2,12 +2,12 @@ import { createSelector } from 'reselect'
 
 const bookListSelector = createSelector(
   [
-    state => state.book,
     state => state.books,
     state => state.loading,
-    state => state.error,
+    state => state.detail,
+    state => state.errors['FETCH_BOOKS'],
   ],
-  (book, books, loading, error) => ({ book, books, loading, error })
+  (books, loading, detail, error) => ({ books, loading, detail, error })
 )
 
 export default bookListSelector
