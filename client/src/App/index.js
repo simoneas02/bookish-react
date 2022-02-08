@@ -2,7 +2,7 @@ import { Route, Routes } from 'react-router-dom'
 import { Typography } from '@material-ui/core'
 
 import BookListContainer from '../BookList/BookListContainer'
-import BookDetailContainer from '../BookDetail/BookDetailContainer'
+import BookDetailsContainer from '../BookDetail/BookDetailsContainer'
 
 const App = () => {
   return (
@@ -12,7 +12,7 @@ const App = () => {
       </Typography>
       <Routes>
         <Route exact path="/" element={<BookListContainer />} />
-        <Route path="/books/:id" element={<BookDetailContainer />} />
+        <Route path="/books/:id" element={<BookDetailsContainer />} />
       </Routes>
     </div>
   )
