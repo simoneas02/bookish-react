@@ -15,18 +15,6 @@ const middlewares = [thunk]
 const mockStore = configureMockStore(middlewares)
 
 describe('BookListContainer related actions', () => {
-  it('Sets the search keyword', () => {
-    const term = ''
-    const expected = {
-      type: types.SET_SEARCH_TERM,
-      term,
-    }
-
-    const action = setSearchTerm(term)
-
-    expect(action).toEqual(expected)
-  })
-
   it('Fetches data successfully', () => {
     const books = [
       { id: 1, name: 'Refactoring' },
@@ -38,13 +26,13 @@ describe('BookListContainer related actions', () => {
       .mockImplementation(() => Promise.resolve({ data: books }))
 
     const expectedActions = [
-      { type: types.PENDING },
-      { type: types.FETCH_BOOKS_SUCCESS, books },
+      { type: types.FETCH_BOOKS_PENDING },
+      { type: types.FETCH_BOOKS_SUCCESS, payload: books },
     ]
 
     const store = mockStore({ books: [] })
 
-    return store.dispatch(fetchBooks('')).then(() => {
+    return store.dispatch(fetchBooks()).then(() => {
       expect(store.getActions()).toEqual(expectedActions)
     })
   })
@@ -57,13 +45,16 @@ describe('BookListContainer related actions', () => {
       )
 
     const expectedActions = [
-      { type: types.PENDING },
-      { type: types.FAILED, error: 'Something went wrong' },
+      { type: types.FETCH_BOOKS_PENDING },
+      {
+        type: types.FETCH_BOOKS_FAILED,
+        payload: { message: 'Something went wrong' },
+      },
     ]
 
     const store = mockStore({ books: [] })
 
-    return store.dispatch(fetchBooks('')).then(() => {
+    return store.dispatch(fetchBooks()).then(() => {
       expect(store.getActions()).toEqual(expectedActions)
     })
   })
