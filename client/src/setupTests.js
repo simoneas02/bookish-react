@@ -7,7 +7,7 @@ import { render } from '@testing-library/react'
 import { MemoryRouter } from 'react-router-dom'
 import { Provider } from 'react-redux'
 
-import store from './store'
+import store from './store/store'
 
 export const renderWithRouter = component => ({
   ...render(<MemoryRouter>{component}</MemoryRouter>),
