@@ -1,6 +1,6 @@
 import axios from 'axios'
 import * as actions from '../redux/actions/actions'
-import store from '.'
+import store from './store'
 
 describe('Store', () => {
   const books = [
@@ -28,16 +28,13 @@ describe('Store', () => {
       .fn()
       .mockImplementation(() => Promise.resolve({ data: books }))
 
-    store.dispatch(actions.setSearchTerm('domain'))
-
-    return store.dispatch(actions.fetchBooks('domain')).then(() => {
-      const state = store.getState()
-
-      expect(state.term).toEqual('domain')
-      expect(axios.get).toHaveBeenCalledWith(
-        'http://localhost:8080/books?q=domain'
+    return store
+      .dispatch(actions.fetchBooks('domain'))
+      .then(() =>
+        expect(axios.get).toHaveBeenCalledWith(
+          'http://localhost:8080/books?q=domain'
+        )
       )
-    })
   })
 
   it('Fetch a book from remote', () => {
@@ -47,7 +44,7 @@ describe('Store', () => {
 
     return store.dispatch(actions.fetchABook(1)).then(() => {
       const state = store.getState()
-      expect(state.book).toEqual(books[0])
+      expect(state.detail).toEqual(books[0])
     })
   })
 })
